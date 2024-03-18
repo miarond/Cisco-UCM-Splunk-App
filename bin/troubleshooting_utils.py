@@ -16,7 +16,7 @@ or implied.
 
 """
 
-__author__ = "Aron Donaldson <ardonald@cisco.com>, Baothong Le <thongle@cisco.com>"
+__author__ = "Aron Donaldson, Baothong Le"
 __contributors__ = ""
 __copyright__ = "Copyright (c) 2024 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
