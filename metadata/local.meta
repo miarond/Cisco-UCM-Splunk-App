@@ -1,0 +1,46 @@
+[props/source%3A%3A...ta-cisco-ucm-realtime-monitoring%2A.log%2A]
+owner = admin
+version = 9.1.2
+modtime = 1708616655.721184000
+
+[props/source%3A%3A...ta_cisco_ucm_realtime_monitoring%2A.log%2A]
+owner = admin
+version = 9.1.2
+modtime = 1708616655.929653000
+
+[ta_cisco_ucm_realtime_monitoring_settings/logging]
+version = 9.1.2
+modtime = 1708985097.743160000
+
+[props/cisco%3Aucm%3AperfmonAPI%3Ajson]
+owner = admin
+version = 9.1.2
+modtime = 1709244301.264424000
+
+[savedsearches/Perfmon%20Counters%20In%20Error%20-%20Last%2024h]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.1.2
+modtime = 1709326025.310041000
+
+[views/cisco_ucm_perfmon_counters]
+owner = admin
+version = 9.1.2
+modtime = 1710182136.160982000
+
+[nav/default]
+version = 9.1.2
+modtime = 1710177873.738052000
+
+[indexes/cucm_realtime_monitoring]
+owner = admin
+version = 9.1.2
+modtime = 1709587917.692785000
+
+[props/cisco%3Aucm%3AperfmonAPI%3Ajson/EXTRACT-object%2Ccounter%2Cvalue%2Ccstatus]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.1.2
+modtime = 1709916218.060194000

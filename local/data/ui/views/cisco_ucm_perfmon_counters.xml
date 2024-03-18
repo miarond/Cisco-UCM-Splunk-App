@@ -1,0 +1,273 @@
+
+<dashboard version="2" theme="light">
+    <label>Cisco UCM Counters</label>
+    <description></description>
+    <definition><![CDATA[
+{
+	"dataSources": {
+		"ds_1v3ld8p2": {
+			"type": "ds.search",
+			"options": {
+				"query": "| eventcount summarize=false index=* | dedup index | fields index",
+				"queryParameters": {
+					"earliest": "0",
+					"latest": ""
+				}
+			},
+			"name": "All Indexes"
+		},
+		"ds_Fk6B47E5": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=\"$index_token$\" sourcetype=\"cisco:ucm:perfmonAPI:json\" host=\"$host_token$\"\n| search cstatus!=0 AND cstatus!=1 \n| chart count by host"
+			},
+			"name": "Counters In Error State"
+		},
+		"ds_8b6mDwVa": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=\"$index_token$\" sourcetype=\"cisco:ucm:perfmonAPI:json\" host=\"$host_token$\" object=\"$object_token$\" counter=\"$counter_token$\"\n| table _time,host,object,counter,value,cstatus",
+				"queryParameters": {}
+			},
+			"name": "Counter Events Filtered"
+		},
+		"ds_koovECq5": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=\"$index_token$\" sourcetype=\"cisco:ucm:perfmonAPI:json\"\n| stats count by host\n| dedup host"
+			},
+			"name": "All Hosts"
+		},
+		"ds_XlY6zSGB": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=\"*\" sourcetype=\"cisco:ucm:perfmonAPI:json\" host=\"$host_token$\" \n| stats count by object"
+			},
+			"name": "All Objects"
+		},
+		"ds_gupQcxxg": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=\"$index_token$\" sourcetype=\"cisco:ucm:perfmonAPI:json\" host=\"$host_token$\" object=\"$object_token$\" \n| stats count by counter"
+			},
+			"name": "All Counters"
+		},
+		"ds_jmk4IyJ3": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=\"$index_token$\" sourcetype=cisco:ucm:perfmonAPI:json host=\"$host_token$\" counter=\"CallsCompleted\"\n| where cstatus=\"0\" OR cstatus=\"1\"\n| chart sum(value) as total by host"
+			},
+			"name": "Sum of Calls Completed"
+		},
+		"ds_MUUtuSOL": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=\"$index_token$\" sourcetype=cisco:ucm:perfmonAPI:json host=\"$host_token$\" counter=\"CallsInProgress\"\n| where cstatus=\"0\" OR cstatus=\"1\"\n| chart sum(value) as total by host"
+			},
+			"name": "Sum of Calls In Progress"
+		}
+	},
+	"visualizations": {
+		"viz_WRmHVtlj": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_Fk6B47E5"
+			},
+			"title": "Counters In Error State",
+			"showProgressBar": false,
+			"showLastUpdated": false,
+			"description": "Counters with \"cstatus\" != 0 or 1",
+			"options": {
+				"majorColor": "#dc4e41",
+				"trendColor": "#dc4e41"
+			}
+		},
+		"viz_TgYl25ma": {
+			"type": "splunk.table",
+			"title": "Counter Events",
+			"dataSources": {
+				"primary": "ds_8b6mDwVa"
+			}
+		},
+		"viz_C2OFwYNn": {
+			"type": "splunk.punchcard",
+			"dataSources": {
+				"primary": "ds_jmk4IyJ3"
+			},
+			"title": "Total Calls Completed",
+			"showProgressBar": false,
+			"showLastUpdated": false,
+			"options": {
+				"size": "> primary | seriesByName('total')",
+				"bubbleColor": "> primary | seriesByName('host') | gradient(bubbleColorConfig)"
+			}
+		},
+		"viz_RkcnPBpp": {
+			"type": "splunk.punchcard",
+			"dataSources": {
+				"primary": "ds_MUUtuSOL"
+			},
+			"title": "Total Calls In Progress",
+			"options": {
+				"size": "> primary | seriesByName('total')",
+				"bubbleColor": "> primary | seriesByName('host') | gradient(bubbleColorConfig)"
+			}
+		}
+	},
+	"inputs": {
+		"input_global_trp": {
+			"type": "input.timerange",
+			"options": {
+				"token": "global_time",
+				"defaultValue": "-24h@h,now"
+			},
+			"title": "Global Time Range"
+		},
+		"input_1L9eA1ar": {
+			"options": {
+				"items": [
+					{
+						"label": "All",
+						"value": "*"
+					}
+				],
+				"defaultValue": "*",
+				"token": "index_token"
+			},
+			"title": "Index",
+			"type": "input.dropdown",
+			"dataSources": {
+				"primary": "ds_1v3ld8p2"
+			}
+		},
+		"input_L6tPs9tJ": {
+			"options": {
+				"items": [
+					{
+						"label": "All",
+						"value": "*"
+					}
+				],
+				"defaultValue": "*",
+				"token": "host_token"
+			},
+			"title": "Host",
+			"type": "input.dropdown",
+			"dataSources": {
+				"primary": "ds_koovECq5"
+			}
+		},
+		"input_wzVOkpRK": {
+			"options": {
+				"items": [
+					{
+						"label": "All",
+						"value": "*"
+					}
+				],
+				"defaultValue": "*",
+				"token": "object_token"
+			},
+			"title": "Object",
+			"type": "input.dropdown",
+			"dataSources": {
+				"primary": "ds_XlY6zSGB"
+			}
+		},
+		"input_sKgLOPPU": {
+			"options": {
+				"items": [
+					{
+						"label": "All",
+						"value": "*"
+					}
+				],
+				"defaultValue": "*",
+				"token": "counter_token"
+			},
+			"title": "Counter",
+			"type": "input.dropdown",
+			"dataSources": {
+				"primary": "ds_gupQcxxg"
+			}
+		}
+	},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"width": 1440,
+			"height": 960
+		},
+		"structure": [
+			{
+				"item": "viz_WRmHVtlj",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"w": 330,
+					"h": 240
+				}
+			},
+			{
+				"item": "viz_TgYl25ma",
+				"type": "block",
+				"position": {
+					"x": 350,
+					"y": 0,
+					"w": 1090,
+					"h": 790
+				}
+			},
+			{
+				"item": "viz_C2OFwYNn",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 260,
+					"w": 330,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_RkcnPBpp",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 530,
+					"w": 330,
+					"h": 260
+				}
+			}
+		],
+		"globalInputs": [
+			"input_global_trp",
+			"input_1L9eA1ar",
+			"input_L6tPs9tJ",
+			"input_wzVOkpRK",
+			"input_sKgLOPPU"
+		]
+	},
+	"title": "Cisco UCM Counters",
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {
+						"latest": "$global_time.latest$",
+						"earliest": "$global_time.earliest$"
+					}
+				}
+			}
+		}
+	}
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>

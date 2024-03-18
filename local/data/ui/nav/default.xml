@@ -1,0 +1,8 @@
+<nav search_view="search" color="#049fd9">
+  <view name="search" label="Search" default="true"/>
+  <collection label="Dashboards">
+    <view source="all" match="cisco_ucm" />
+  </collection>
+  <view name="inputs" />
+  <view name="configuration"/>
+</nav>
