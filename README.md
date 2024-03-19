@@ -1,3 +1,4 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/miarond/Cisco-UCM-Splunk-App)
 # Cisco UCM Realtime Monitoring Splunk App
 
 This project contains a custom-built Splunk Application which has the following capabilities:
