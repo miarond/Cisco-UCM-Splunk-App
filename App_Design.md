@@ -1,6 +1,6 @@
 # Application Design
 
-As mentioned previously, this application allows Splunk to communicate with one (or more) Cisco UCM servers using their built-in Performance Monitoring API, which is a SOAP-based interface (i.e. a stateful API that exchanges data in XML format).  Splunk is capable of communicating with any external data source through the use of "Scripted Inputs", which can be take the form of custom Python scripts or Shell scripts (Bash, Powershell, Batch files, etc.).  
+As mentioned previously, this application allows Splunk to communicate with one (or more) Cisco UCM servers using their built-in Performance Monitoring API, which is a SOAP-based interface (i.e. a stateful API that exchanges data in XML format).  Splunk is capable of communicating with any external data source through the use of "Scripted Inputs", which can take the form of custom Python scripts or Shell scripts (Bash, Powershell, Batch files, etc.).  
 
 For this application, we used the Python programming language to establish a SOAP session with Cisco UCM, configure counters, obtain their values, extract that data from XML format, and convert it into JSON format for insertion into the Splunk index.  JSON was chosen for its improved readability and Splunk's ability to easily extract fields and data from it.
 
